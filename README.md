@@ -1,7 +1,7 @@
 # wrdExtractr Exercise
 
 ## Overview
-The wrdExtractr is a small projecct that i worked on while completing the Hack The Box Academy: Introduction to Python3 Module.
+The wrdExtractr is a small project that i worked on while completing the Hack The Box Academy: Introduction to Python3 Module.
 
 ## Goal
 The goal of this project is to utilize what I learned from the module to create a script that does the following:
