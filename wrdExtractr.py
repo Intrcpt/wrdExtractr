@@ -34,3 +34,10 @@ for word in all_words:
     else:
         current_count = word_count.get(word)
         word_count[word] = current_count + 1
+        
+# Sorts list of words into a list
+top_words = sorted(word_count.items(), key=lambda item: item[1], reverse=True)
+
+# Prints first element of the tuple for each tuple (top_words[i][0])
+for i in range(10):
+    print(top_words[i][0])
