@@ -1,4 +1,6 @@
 import requests
+import re
+from bs4 import BeautifulSoup
 
 PAGE_URL = 'http://URL'
 
@@ -12,5 +14,9 @@ def get_html_of(url):
 
     return resp.content.decode()
 
-# print the result of this function call  
-print(get_html_of(PAGE_URL))
+
+html = get_html_of(PAGE_URL)
+soup = BeautifulSoup(html, 'html.parser')
+raw_text = soup.get_text()
+#  r'\w+' is telling Python to interpret the \w part of the string as two individual characters and not an escaped w.
+all_words = re.findall(r'\w+', raw_text)
