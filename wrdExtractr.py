@@ -1,8 +1,7 @@
+import click
 import requests
 import re
 from bs4 import BeautifulSoup
-
-PAGE_URL = 'http://URL'
 
 # fetches the HTML into a function and does a simple fail check for broken links
 def get_html_of(url):
@@ -14,13 +13,15 @@ def get_html_of(url):
 
     return resp.content.decode()
 
-def count_occurrences_in(word_list):
+def count_occurrences_in(word_list, min_length):
 
    # word_count as an empty dictionary - a data structure of key/value pairs allowing the lookup of some value given some key.
     word_count = {}
     
     # Goes through each word in all_words and checks if it exists already.
     for word in word_list:
+        if len(word) < min_length:
+            continue
         # Sets the key (word) to a value of 1 if it does not exist.
         if word not in word_count:
             word_count[word] = 1
@@ -38,19 +39,20 @@ def get_all_words_from(url):
     return re.findall(r'\w+', raw_text)
 
 # Sorts list of words into a list
-def get_top_words_from(all_words):
-    occurrences = count_occurrences_in(all_words)
+def get_top_words_from(all_words, min_length):
+    occurrences = count_occurrences_in(all_words, min_length)
     return sorted(occurrences.items(), key=lambda item: item[1], reverse=True)
 
-all_words = get_all_words_from(PAGE_URL)
-top_words = get_top_words_from(all_words)
+@click.command()
+@click.option('--url', '-u', prompt='Web URL', help='URL of webpage to extract from.')
+@click.option('--length', '-l', default=0, help='Minimum word length (default: 0, no limit).')
+def main(url, length):
+    the_words = get_all_words_from(url)
+    top_words = get_top_words_from(the_words, length)
 
-# function takes a URL as a parameter and then immediately uses the URL to call another function that gets the list of words needed.
-def get_top_words_from(url):
-    all_words = get_all_words_from(url)
-    occurrences = count_occurrences_in(all_words)
-    return sorted(occurrences.items(), key=lambda item: item[1], reverse=True)
+    for i in range(10):
+        print(top_words[i][0])
 
-# Prints first element of the tuple for each tuple (top_words[i][0])
-for i in range(10):
-    print(top_words[i][0])
+if __name__ == '__main__':
+    main()
+    
