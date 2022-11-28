@@ -18,3 +18,15 @@ I used this project as an opportunity to become familiar with Python3 but also g
 - The code will download and print the entire HTML of a webpage.
 - The URL of the webpage is fixed inside the code.
 - Uses the requests library.
+
+## Usage
+
+python3 wrdExtractr.py  --help
+Usage: wrdExtractr.py [OPTIONS]
+
+Options:
+  -u, --url TEXT        URL of webpage to extract from.
+  -l, --length INTEGER  Minimum word length (default: 0, no limit).
+  --help                Show this message and exit.
+
+
